@@ -27,7 +27,7 @@ procedure Tests is
 begin
    -- TEST 1 - Euclidean Distance (Identical)
    Put_Line ("TEST 1 — Euclidean Distance (Identical)");
-   V1 := (1.0, 2.0, 3.0);
+   V1 := [1.0, 2.0, 3.0];
    Dist := Euclidean_Distance (V1, V1);
    Check ("1.1 Distance to self is 0", Dist = 0.0);
    Check ("1.2 Distance is non-negative", Dist >= 0.0);
@@ -35,7 +35,7 @@ begin
 
    -- TEST 2 - Euclidean Distance (Known Value)
    Put_Line ("TEST 2 — Euclidean Distance (Known Value)");
-   V2 := (4.0, 2.0, 7.0);
+   V2 := [4.0, 2.0, 7.0];
    Dist := Euclidean_Distance (V1, V2);
    Check ("2.1 V1 length is 3", V1'Length = 3);
    Check ("2.2 V2 length is 3", V2'Length = 3);
@@ -44,7 +44,7 @@ begin
    -- TEST 3 - Euclidean Distance (Mismatched Bounds)
    Put_Line ("TEST 3 — Euclidean Distance (Mismatched Bounds)");
    declare
-      V_Offset : Vector (2 .. 4) := (4.0, 2.0, 7.0);
+      V_Offset : constant Vector (2 .. 4) := [4.0, 2.0, 7.0];
    begin
       Dist := Euclidean_Distance (V1, V_Offset);
       Check ("3.1 V_Offset has different First bounds", V_Offset'First = 2);
@@ -54,7 +54,7 @@ begin
 
    -- TEST 4 - Euclidean Distance (Dimension Mismatch)
    Put_Line ("TEST 4 — Dimension Mismatch Exception (Distance)");
-   V3 := (1.0, 2.0);
+   V3 := [1.0, 2.0];
    Success := False;
    begin
       Dist := Euclidean_Distance (V1, V3);
@@ -78,7 +78,7 @@ begin
    Map_Small(2, 1, 2) := 2.5;
    Map_Small(2, 1, 3) := 3.5;
    declare
-      Extracted : Vector := Extract_Vector (Map_Small, 2, 1);
+      Extracted : constant Vector := Extract_Vector (Map_Small, 2, 1);
    begin
       Check ("6.1 Extraction length identically matches depth", Extracted'Length = 3);
       Check ("6.2 First feature extracted maps accurately", Extracted(1) = 1.5);
@@ -91,7 +91,7 @@ begin
    Data_Small(1, 2) := 0.2;
    Data_Small(1, 3) := 0.3;
    declare
-      Ext : Vector := Extract_Sample (Data_Small, 1);
+      Ext : constant Vector := Extract_Sample (Data_Small, 1);
    begin
       Check ("7.1 Sample slice length strictly correct", Ext'Length = 3);
       Check ("7.2 Dataset primary value accurately sliced", Ext(1) = 0.1);
@@ -104,7 +104,7 @@ begin
    Map_Small(1, 2, 2) := 9.0;
    Map_Small(1, 2, 3) := 9.0;
    declare
-      Target : constant Vector (1 .. 3) := (9.0, 9.0, 9.0);
+      Target : constant Vector (1 .. 3) := [9.0, 9.0, 9.0];
    begin
       Coord := Find_BMU (Map_Small, Target);
       Check ("8.1 BMU uniquely matched on X coordinate (1)", Coord.X = 1);
@@ -112,7 +112,7 @@ begin
       Check ("8.3 Map node values left completely unmutated", Map_Small(1,2,1) = 9.0);
    end;
 
-   -- TEST 9 - Find BMU (Exception)
+   -- TEST 9 - Find BMU Exception
    Put_Line ("TEST 9 — Find BMU Exception");
    Success := False;
    begin
@@ -170,7 +170,7 @@ begin
    -- TEST 13 - Exception on Dimension Mismatch in Training
    Put_Line ("TEST 13 — Dataset Dimension Mismatch during Training");
    declare
-      Bad_Data : Dataset (1 .. 2, 1 .. 2) := (others => (others => 0.0));
+      Bad_Data : constant Dataset (1 .. 2, 1 .. 2) := [others => [others => 0.0]];
       Batch_Success : Boolean := False;
       Online_Success : Boolean := False;
    begin
