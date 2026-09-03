@@ -180,8 +180,8 @@ package body Self_Organizing_Map is
          Decay_Factor := Data_Value (Epoch - 1) / Data_Value (Epochs);
          Radius := Initial_Radius * Exp (-Decay_Factor * 5.0);
 
-         Num := (others => (others => (others => 0.0)));
-         Den := (others => (others => 0.0));
+         Num := [others => [others => [others => 0.0]]];
+         Den := [others => [others => 0.0]];
 
          -- Accumulate updates for all samples without modifying the map directly
          for S in Data'Range(1) loop
